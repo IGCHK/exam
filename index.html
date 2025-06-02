@@ -45,6 +45,19 @@
       margin-top: 20px;
       display: none;
     }
+    .open-tab-button {
+      position: fixed;
+      bottom: 10px;
+      right: 10px;
+      background-color: #b39b00;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      padding: 6px 8px;
+      font-size: 12px;
+      cursor: pointer;
+      z-index: 100;
+    }
   </style>
 </head>
 <body>
@@ -66,6 +79,7 @@
     </div>
     <iframe id="pdfViewer" src=""></iframe>
   </div>
+  <button class="open-tab-button" onclick="openInNewTab()">↗</button>
 
   <script>
     const papers = {
@@ -127,7 +141,7 @@
       document.getElementById("pdfViewer").style.display = "none";
     }
 
-    function loadPDF() {
+    function buildPDFUrl() {
       const subject = document.getElementById("subject").value;
       const paper = document.getElementById("paper").value;
       const year = document.getElementById("year").value;
@@ -138,11 +152,21 @@
       const paperCode = paper.includes("Component") ? `c${paper.slice(-1)}` : `u${paper.slice(-1)}`;
       const yearShort = year.slice(-2);
 
-      const url = `https://file.igchkshop.dpdns.org/WJEC-A2/${subject}/${paperFolder}/${year}/s${yearShort}-${displaySubject}-${paperCode}-${type}.pdf`;
+      return `https://file.igchkshop.dpdns.org/WJEC-A2/${subject}/${paperFolder}/${year}/s${yearShort}-${displaySubject}-${paperCode}-${type}.pdf`;
+    }
 
+    function loadPDF() {
+      const url = buildPDFUrl();
       const iframe = document.getElementById("pdfViewer");
       iframe.src = url;
       iframe.style.display = "block";
+    }
+
+    function openInNewTab() {
+      const iframe = document.getElementById("pdfViewer");
+      if (iframe.src) {
+        window.open(iframe.src, '_blank');
+      }
     }
 
     // Initial setup without auto-loading PDF
