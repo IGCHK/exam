@@ -22,3 +22,5 @@ Ok so i want you to change 3 things
 1. When the user just click in the page, remove the preset pdf and make it empty with just the dropbox for user to click, so no pdf preset shown
 2. Also where is the practical paper for WJEC Unit 5, the practical paper ends with p.pdf
 3. I also want the Last Dropbox be showing "Question Paper" instead of qp and "Mark Scheme" instead of ms
+
+Also, there is some bug with the PDF viewer start empty, I think you can make a button "Enter" so that when user clicks it it will start showing because right now I can view the 1st file which is phyiscs 2017 unit 3 question paper
