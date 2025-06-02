@@ -10,3 +10,10 @@ There is multiple part let me break down
 
 
 I want you to create a WJEC like webpage titled, "IGC HK Exam - WJEC Past Paper Viewer" which can have dropbox for user to click in different paper. Let me give you an example, dont make it exactly the same but you can use a similar layout whcih can be seen in the page https://www.wjec.co.uk/qualifications/physics-asa-level/#tab_pastpapers
+
+
+Great, I want a few things to be amended, 
+1. Maths only have file of WJEC Unit 3 and 4, and only has year 2018, 2019, 2022, 2023, 2024
+2. Only WJEC Unit 5 has practical paper
+3. Physics, Chemistry and Biology dont have WJEC paper of all unit 3,4,5 for the year 2020 and 2021, but eduqas still has
+4. Lastly, can the title match the colour of the light yellow whihc is in background instead of the dark blue colour
