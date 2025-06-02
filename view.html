@@ -43,6 +43,7 @@
       height: 90vh;
       border: none;
       margin-top: 20px;
+      display: none;
     }
   </style>
 </head>
@@ -52,15 +53,15 @@
   </header>
   <div class="container">
     <div class="dropdowns">
-      <select id="subject" onchange="updateFiles()">
+      <select id="subject" onchange="updatePapers()">
         <option value="Physics">Physics</option>
         <option value="Chemistry">Chemistry</option>
         <option value="Biology">Biology</option>
         <option value="Mathematics">Mathematics</option>
       </select>
-      <select id="paper" onchange="updateFiles()"></select>
-      <select id="year" onchange="updateFiles()"></select>
-      <select id="type" onchange="updateFiles()"></select>
+      <select id="paper" onchange="updateYears()"></select>
+      <select id="year" onchange="updateTypes()"></select>
+      <select id="type" onchange="loadPDF()"></select>
     </div>
     <iframe id="pdfViewer" src=""></iframe>
   </div>
@@ -75,63 +76,76 @@
 
     const years = {
       default: [2017, 2018, 2019, 2022, 2023, 2024],
-      Maths: [2018, 2019, 2022, 2023, 2024]
+      Maths: [2018, 2019, 2022, 2023, 2024],
+      WJECException: [2017, 2018, 2019, 2022, 2023, 2024] // For WJEC Unit 3/4/5 in Physics, Chemistry, Biology skip 2020 and 2021
     };
 
-    const types = {
-      default: ["qp", "ms"],
-      practical: ["qp", "ms", "p"]
+    const typeMap = {
+      qp: "Question Paper",
+      ms: "Mark Scheme",
+      p: "Practical Paper"
     };
 
-    function updateDropdown(id, options) {
+    function updateDropdown(id, options, labels = null) {
       const dropdown = document.getElementById(id);
       dropdown.innerHTML = "";
       options.forEach(opt => {
         const option = document.createElement("option");
         option.value = opt;
-        option.textContent = opt;
+        option.textContent = labels ? labels[opt] : opt;
         dropdown.appendChild(option);
       });
     }
 
-    function updateFiles() {
-      const subject = document.getElementById("subject").value;
-      let availableYears = years.default;
-      if (subject === "Mathematics") availableYears = years.Maths;
-
-      const selectedPaper = document.getElementById("paper").value;
-      let availableTypes = types.default;
-      if (selectedPaper === "WJEC Unit 5") availableTypes = types.practical;
-
-      const selectedYear = document.getElementById("year").value;
-      const selectedType = document.getElementById("type").value;
-
-      let filename = selectedPaper;
-      let displaySubject = subject.toLowerCase();
-      if (subject === "Mathematics") displaySubject = "maths";
-
-      const paperCode = selectedPaper.includes("WJEC") ? 'wjec' : 'eduqas';
-      const shortPaper = selectedPaper.includes("Component") ? `c${selectedPaper.slice(-1)}` : `u${selectedPaper.slice(-1)}`;
-
-      const yearNum = selectedYear.slice(-2);
-      const filepath = `https://file.igchkshop.dpdns.org/WJEC-A2/${subject}/${filename.replace(/ /g, "%20")}/${selectedYear}/s${yearNum}-${displaySubject}-${shortPaper}-${selectedType}.pdf`;
-
-      document.getElementById("pdfViewer").src = filepath;
-    }
-
-    document.getElementById("subject").addEventListener("change", () => {
+    function updatePapers() {
       const subject = document.getElementById("subject").value;
       updateDropdown("paper", papers[subject]);
-      updateDropdown("year", (subject === "Mathematics") ? years.Maths : years.default);
-      updateDropdown("type", types.default);
-      updateFiles();
-    });
+      updateYears();
+    }
 
-    // Initialize
-    updateDropdown("paper", papers["Physics"]);
-    updateDropdown("year", years.default);
-    updateDropdown("type", types.default);
-    updateFiles();
+    function updateYears() {
+      const subject = document.getElementById("subject").value;
+      const paper = document.getElementById("paper").value;
+      let yearList = years.default;
+      if (subject === "Mathematics") {
+        yearList = years.Maths;
+      } else if (paper.startsWith("WJEC") && !paper.includes("Maths")) {
+        yearList = years.WJECException;
+      }
+      updateDropdown("year", yearList);
+      updateTypes();
+    }
+
+    function updateTypes() {
+      const paper = document.getElementById("paper").value;
+      let typeOptions = ["qp", "ms"];
+      if (paper === "WJEC Unit 5") {
+        typeOptions.push("p");
+      }
+      updateDropdown("type", typeOptions, typeMap);
+      document.getElementById("pdfViewer").style.display = "none";
+    }
+
+    function loadPDF() {
+      const subject = document.getElementById("subject").value;
+      const paper = document.getElementById("paper").value;
+      const year = document.getElementById("year").value;
+      const type = document.getElementById("type").value;
+
+      const displaySubject = (subject === "Mathematics") ? "maths" : subject.toLowerCase();
+      const paperFolder = paper.replace(/ /g, "%20");
+      const paperCode = paper.includes("Component") ? `c${paper.slice(-1)}` : `u${paper.slice(-1)}`;
+      const yearShort = year.slice(-2);
+
+      const url = `https://file.igchkshop.dpdns.org/WJEC-A2/${subject}/${paperFolder}/${year}/s${yearShort}-${displaySubject}-${paperCode}-${type}.pdf`;
+
+      const iframe = document.getElementById("pdfViewer");
+      iframe.src = url;
+      iframe.style.display = "block";
+    }
+
+    // Initial Setup
+    updatePapers();
   </script>
 </body>
 </html>
