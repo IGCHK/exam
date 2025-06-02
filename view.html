@@ -34,7 +34,7 @@
       gap: 10px;
       justify-content: center;
     }
-    select {
+    select, button {
       padding: 10px;
       font-size: 16px;
     }
@@ -61,7 +61,8 @@
       </select>
       <select id="paper" onchange="updateYears()"></select>
       <select id="year" onchange="updateTypes()"></select>
-      <select id="type" onchange="loadPDF()"></select>
+      <select id="type"></select>
+      <button onclick="loadPDF()">Enter</button>
     </div>
     <iframe id="pdfViewer" src=""></iframe>
   </div>
@@ -144,8 +145,9 @@
       iframe.style.display = "block";
     }
 
-    // Initial Setup
+    // Initial setup without auto-loading PDF
     updatePapers();
+    document.getElementById("pdfViewer").style.display = "none";
   </script>
 </body>
 </html>
