@@ -1,0 +1,12 @@
+So I want you to create a website html which is use to view the file, I have stored the pdf into url which is in format of 
+https://file.igchkshop.dpdns.org/WJEC-A2/Biology/Eduqas%20Component%202/2018/s18-biology-c2-qp.pdf
+
+There is multiple part let me break down
+1. Domain: https://file.igchkshop.dpdns.org/WJEC-A2 <- This is fixed
+2. Then it is "Biology" <- This is the subject, there is 4 subject, Physics, Chemistry, Biology and Mathematics
+3. Then file name of "Eduqas%20Component%202" <- The %20 means space, so the actual file name is "Eduqas Component 2" so there is 6 files in each subject which is 1. WJEC Unit 3 2. WJEC Unit 4 3. WJEC Unit 5 and 4. Eduqas Component 1 5. Eduqas Component 2 6. Eduqas Component 3
+4. Then is the year "2018" <- There are 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024
+5. Then it is actual file which is in format of "s18-biology-c2-qp.pdf" <- s is always same, 18 means year, biology is the subject (there is only one thing to note for the mathematics file, it would be shortened to maths so for a WJEC 2019 Unit 3 Question paper is https://file.igchkshop.dpdns.org/WJEC-A2/Mathematics/WJEC%20Maths%20Unit%203/2019/s19-maths-u3-qp.pdf) and lastly there is question paper which is shortened to qp before .pdf, mark scheme which is shortened to ms.pdf and practical paper which is shortened to p.pdf
+
+
+I want you to create a WJEC like webpage titled, "IGC HK Exam - WJEC Past Paper Viewer" which can have dropbox for user to click in different paper. Let me give you an example, dont make it exactly the same but you can use a similar layout whcih can be seen in the page https://www.wjec.co.uk/qualifications/physics-asa-level/#tab_pastpapers
