@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IGC HK Exam - WJEC Past Paper Viewer</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #fdf6a6;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: #fdf6a6;
+      color: #333;
+      padding: 1rem;
+      text-align: center;
+    }
+    .container {
+      max-width: 800px;
+      margin: 2rem auto;
+      background: white;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    label {
+      font-weight: bold;
+    }
+    select, button {
+      width: 100%;
+      padding: 0.5rem;
+      margin: 1rem 0;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+    iframe {
+      width: 100%;
+      height: 600px;
+      border: none;
+      margin-top: 2rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>IGC HK Exam - WJEC Past Paper Viewer</h1>
+  </header>
+  <div class="container">
+    <label for="subject">Subject</label>
+    <select id="subject" onchange="updateOptions()">
+      <option value="Biology">Biology</option>
+      <option value="Chemistry">Chemistry</option>
+      <option value="Physics">Physics</option>
+      <option value="Mathematics">Mathematics</option>
+    </select>
+
+    <label for="paper">Paper</label>
+    <select id="paper"></select>
+
+    <label for="year">Year</label>
+    <select id="year"></select>
+
+    <label for="type">Paper Type</label>
+    <select id="type"></select>
+
+    <button onclick="loadPaper()">View Paper</button>
+
+    <iframe id="viewer" src="" hidden></iframe>
+  </div>
+
+  <script>
+    const options = {
+      Biology: {
+        papers: ["WJEC Unit 3", "WJEC Unit 4", "WJEC Unit 5", "Eduqas Component 1", "Eduqas Component 2", "Eduqas Component 3"],
+        years: {
+          "WJEC Unit 3": ["2017", "2018", "2019", "2022", "2023", "2024"],
+          "WJEC Unit 4": ["2017", "2018", "2019", "2022", "2023", "2024"],
+          "WJEC Unit 5": ["2017", "2018", "2019", "2022", "2023", "2024"],
+          "Eduqas Component 1": ["2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024"],
+          "Eduqas Component 2": ["2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024"],
+          "Eduqas Component 3": ["2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024"]
+        }
+      },
+      Chemistry: {
+        papers: ["WJEC Unit 3", "WJEC Unit 4", "WJEC Unit 5", "Eduqas Component 1", "Eduqas Component 2", "Eduqas Component 3"],
+        years: {
+          "WJEC Unit 3": ["2017", "2018", "2019", "2022", "2023", "2024"],
+          "WJEC Unit 4": ["2017", "2018", "2019", "2022", "2023", "2024"],
+          "WJEC Unit 5": ["2017", "2018", "2019", "2022", "2023", "2024"],
+          "Eduqas Component 1": ["2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024"],
+          "Eduqas Component 2": ["2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024"],
+          "Eduqas Component 3": ["2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024"]
+        }
+      },
+      Physics: {
+        papers: ["WJEC Unit 3", "WJEC Unit 4", "WJEC Unit 5", "Eduqas Component 1", "Eduqas Component 2", "Eduqas Component 3"],
+        years: {
+          "WJEC Unit 3": ["2017", "2018", "2019", "2022", "2023", "2024"],
+          "WJEC Unit 4": ["2017", "2018", "2019", "2022", "2023", "2024"],
+          "WJEC Unit 5": ["2017", "2018", "2019", "2022", "2023", "2024"],
+          "Eduqas Component 1": ["2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024"],
+          "Eduqas Component 2": ["2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024"],
+          "Eduqas Component 3": ["2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024"]
+        }
+      },
+      Mathematics: {
+        papers: ["WJEC Unit 3", "WJEC Unit 4"],
+        years: {
+          "WJEC Unit 3": ["2018", "2019", "2022", "2023", "2024"],
+          "WJEC Unit 4": ["2018", "2019", "2022", "2023", "2024"]
+        }
+      }
+    };
+
+    function updateOptions() {
+      const subject = document.getElementById("subject").value;
+      const paperSelect = document.getElementById("paper");
+      const yearSelect = document.getElementById("year");
+      const typeSelect = document.getElementById("type");
+
+      paperSelect.innerHTML = "";
+      yearSelect.innerHTML = "";
+      typeSelect.innerHTML = "";
+
+      options[subject].papers.forEach(p => {
+        const option = document.createElement("option");
+        option.value = p;
+        option.textContent = p;
+        paperSelect.appendChild(option);
+      });
+
+      updateYearsAndTypes();
+    }
+
+    function updateYearsAndTypes() {
+      const subject = document.getElementById("subject").value;
+      const paper = document.getElementById("paper").value;
+      const yearSelect = document.getElementById("year");
+      const typeSelect = document.getElementById("type");
+
+      yearSelect.innerHTML = "";
+      typeSelect.innerHTML = "";
+
+      options[subject].years[paper].forEach(y => {
+        const option = document.createElement("option");
+        option.value = y;
+        option.textContent = y;
+        yearSelect.appendChild(option);
+      });
+
+      ["qp", "ms"].forEach(t => {
+        const opt = document.createElement("option");
+        opt.value = t;
+        opt.textContent = t === "qp" ? "Question Paper" : "Mark Scheme";
+        typeSelect.appendChild(opt);
+      });
+
+      if (paper === "WJEC Unit 5") {
+        const opt = document.createElement("option");
+        opt.value = "p";
+        opt.textContent = "Practical Paper";
+        typeSelect.appendChild(opt);
+      }
+    }
+
+    function loadPaper() {
+      const subject = document.getElementById("subject").value;
+      const paper = document.getElementById("paper").value;
+      const year = document.getElementById("year").value;
+      const type = document.getElementById("type").value;
+
+      let paperShort = "";
+      let subjShort = subject.toLowerCase();
+      if (subject === "Mathematics") subjShort = "maths";
+
+      if (paper.includes("Unit 3")) paperShort = "u3";
+      else if (paper.includes("Unit 4")) paperShort = "u4";
+      else if (paper.includes("Unit 5")) paperShort = "u5";
+      else if (paper.includes("Component 1")) paperShort = "c1";
+      else if (paper.includes("Component 2")) paperShort = "c2";
+      else if (paper.includes("Component 3")) paperShort = "c3";
+
+      const folder = encodeURIComponent(paper);
+      const yrShort = year.slice(2);
+      const fileName = `s${yrShort}-${subjShort}-${paperShort}-${type}.pdf`;
+      const url = `https://file.igchkshop.dpdns.org/WJEC-A2/${subject}/${folder}/${year}/${fileName}`;
+
+      const iframe = document.getElementById("viewer");
+      iframe.src = url;
+      iframe.hidden = false;
+    }
+
+    document.getElementById("subject").addEventListener("change", updateOptions);
+    document.getElementById("paper").addEventListener("change", updateYearsAndTypes);
+    updateOptions();
+  </script>
+</body>
+</html>
