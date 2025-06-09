@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>IGC HK Exam</title>
   <link rel="icon" type="image/png" href="https://web.igchkshop.dpdns.org/IGC%20HK/IGC%20HK%20EDU%20Logo.png" />
+  <meta name="description" content="IGC HK Exam - Access WJEC and Eduqas past papers for Physics, Chemistry, Biology, and Mathematics. Browse question papers, mark schemes, and practical papers from 2017 to 2024." />
+  <meta name="keywords" content="IGC HK, IGC HK Exam, WJEC, Eduqas, Past Papers, WJEC Past Papers, Exam Viewer, Question Paper, Mark Scheme, Physics, Chemistry, Biology, Mathematics, IGC HK WJEC" />
+  <meta name="robots" content="index, follow" />
   <style>
     body {
       background-color: #fdf6a6;
@@ -59,6 +62,13 @@
       cursor: pointer;
       z-index: 100;
     }
+    .seo-text {
+      font-size: 14px;
+      text-align: center;
+      margin-top: 20px;
+      color: #555;
+      max-width: 800px;
+    }
   </style>
 </head>
 <body>
@@ -79,6 +89,10 @@
       <button onclick="loadPDF()">Enter</button>
     </div>
     <iframe id="pdfViewer" src=""></iframe>
+
+    <p class="seo-text">
+      Find WJEC and Eduqas past papers for Physics, Chemistry, Biology, and Mathematics — all curated for IGC HK students. Browse question papers, mark schemes, and practical exams from 2017 to 2024. IGC HK Exam provides a comprehensive past paper viewer for better revision and preparation.
+    </p>
   </div>
   <button class="open-tab-button" onclick="openInNewTab()">↗</button>
 
@@ -93,7 +107,7 @@
     const years = {
       default: [2017, 2018, 2019, 2022, 2023, 2024],
       Maths: [2018, 2019, 2022, 2023, 2024],
-      WJECException: [2017, 2018, 2019, 2022, 2023, 2024] // For WJEC Unit 3/4/5 in Physics, Chemistry, Biology skip 2020 and 2021
+      WJECException: [2017, 2018, 2019, 2022, 2023, 2024]
     };
 
     const typeMap = {
